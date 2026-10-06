@@ -26,12 +26,14 @@ Assumptions
 Usage
 -----
     python main.py
+    or
+    python3 main.py
 
 Adding an algorithm
 -------------------
 Create algorithms/<name>.py containing a function
 
-    sort_and_count(items) -> (sorted_items, inversion_count)
+    sort_and_count(items: list) -> tuple[sorted_items: list, inversion_count: int]
 
 that does not modify `items`, then add one line to ALGORITHMS below.
 """
@@ -79,7 +81,8 @@ class RankingData:
             that page.
         sequences: sequences[source_index] holds that source's ranks with the
             pages arranged in combined-rank order. These lists are the input
-            of the sorting algorithms.
+            of the sorting algorithms to count inversions and compute
+            reliability.
     """
 
     names: list[str]
@@ -103,16 +106,15 @@ def read_source(path: Path) -> list[int]:
         path: Location of the source file.
 
     Returns:
-        The ranks in file order.
+        The page's ranks in file order.
     """
     source_ranks = []
     with open(path, encoding="utf-8") as source_file:
         for line in source_file:
-            # strip() also removes the Windows line endings (CRLF) the
-            # provided files use.
             text = line.strip()
             if text:
                 source_ranks.append(int(text))
+
     return source_ranks
 
 
@@ -133,6 +135,7 @@ def compute_combined(ranks: list[list[int]]) -> list[int]:
     for source_ranks in ranks:
         for page in range(page_count):
             combined[page] += source_ranks[page]
+
     return combined
 
 
@@ -171,7 +174,8 @@ def load_rankings(source_dir: Path) -> RankingData:
         source_dir: Folder containing the files named "source*.txt".
 
     Returns:
-        A RankingData with the names, ranks, combined ranks and sequences.
+        A RankingData object with the names, ranks, combined ranks and
+        sequences.
 
     Raises:
         ValueError: If the source files do not all hold the same number of
@@ -209,8 +213,7 @@ def count_inversions(
 
     Args:
         data: The loaded rankings.
-        sort_and_count: The algorithm to use, for example
-            merge_sort.sort_and_count.
+        sort_and_count: The algorithm to use.
 
     Returns:
         A dictionary mapping each source name to its inversion count.
@@ -239,7 +242,8 @@ def count_inversions(
 
 
 def check_agreement(results: dict[str, dict[str, int]]) -> None:
-    """Confirm that every algorithm reported the same inversion counts.
+    """Confirm that every algorithm reported the same inversion counts for
+        the same source.
 
     The number of inversions is a property of the sequence, not of the
     algorithm that counts it. Any difference between two algorithms therefore
