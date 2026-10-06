@@ -1,2 +1,3 @@
-# search_engine_sorting
-CS 3364 search engine sorting algorithm for web-pages based on ranking reliability
+# search engine sorting
+sorts 5 page rankings, counts the disagreemnts, and finds the most realiable source.
+run `g++ main.cpp -o app && ./app` from the project folder.
