@@ -39,6 +39,12 @@ Two safety checks run along the way, and the program stops with an error if eith
 - Python 3.9 or newer
 - No third-party packages
 
+## Submission files
+
+- `main.py`, `algorithms/`, and `sources/` are the program and its input data.
+- `output/pdf/Project1_Report.pdf` is the project report.
+- `tests/` contains the program's correctness checks.
+
 ## How to run
 
 From the project folder:
@@ -109,7 +115,8 @@ search_engine_sorting/
 │   └── test_algorithms.py   tests for every registered algorithm
 ├── sources/
 │   └── source1.txt ... source5.txt    the five rankings, 10,000 lines each
-├── Project1.doc, Project1.pdf         the project statement
+├── Project1_Report.md        editable report text
+├── output/pdf/Project1_Report.pdf    submission report
 └── README.md
 ```
 
