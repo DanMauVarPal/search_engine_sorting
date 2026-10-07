@@ -41,7 +41,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from algorithms import merge_sort, quick_sort
+from algorithms import custom_sort, merge_sort, quick_sort
 
 # Folder holding the source files. It is built from the location of this file
 # so the program can be started from any working directory.
@@ -52,11 +52,11 @@ SOURCE_DIR = Path(__file__).resolve().parent / "sources"
 SortAndCount = Callable[[list], tuple[list, int]]
 
 # Algorithms to run, as (name shown in the report, function to call).
-# To add the third algorithm, import its module above and add one line here,
-# for example: ("Insertion sort", custom_sort.sort_and_count)
+# To add another algorithm, import its module above and add one line here.
 ALGORITHMS: list[tuple[str, SortAndCount]] = [
     ("Merge sort", merge_sort.sort_and_count),
     ("Quick sort", quick_sort.sort_and_count),
+    ("Binary insertion sort", custom_sort.sort_and_count),
 ]
 
 
