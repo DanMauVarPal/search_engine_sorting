@@ -36,8 +36,10 @@ Two safety checks run along the way, and the program stops with an error if eith
 
 ## Requirements
 
-- Python 3.9 or newer
-- No third-party packages
+Either one of these:
+
+- **Python 3.9 or newer**, to run the program directly. No third-party packages are needed.
+- **Docker**, to run it in a container without installing Python. See [How to run with Docker](#how-to-run-with-docker).
 
 ## How to run
 
@@ -94,6 +96,44 @@ python -m unittest
 
 The tests in `tests/test_algorithms.py` run every algorithm registered in `main.py` against hand-checked lists, random lists counted by brute force, and an input ordering that is hard for quick sort. They also check that an algorithm does not modify the list it is given.
 
+## How to run with Docker
+
+The `Dockerfile` builds an image that holds Python 3.14, the program, the algorithms, the tests and the five source files. A computer with Docker can then run the program without having Python installed.
+
+Build the image, from the project folder:
+
+```
+docker build -t search-engine-sorting .
+```
+
+Run the program:
+
+```
+docker run --rm search-engine-sorting
+```
+
+The output is the same as in [How to run](#how-to-run). The `--rm` option removes the container once the program ends.
+
+Run the tests:
+
+```
+docker run --rm search-engine-sorting python -m unittest
+```
+
+To run the program on the source files of a folder on your computer, instead of the ones stored in the image, mount that folder over `/app/sources`. The files must be named `source*.txt` and hold one rank per line:
+
+```
+docker run --rm -v "$(pwd)/sources:/app/sources:ro" search-engine-sorting
+```
+
+That command is written for a Linux or macOS shell. In PowerShell, write `${PWD}` in place of `$(pwd)`.
+
+Things to know:
+
+- **Internet.** Building needs a connection the first time, to download the Python base image. Running a container needs none.
+- **Rebuilding.** The image is a snapshot of the project. After changing the code or the source files, build it again.
+- **Permissions.** Inside the container the program runs as an ordinary user, not as root.
+
 ## Project layout
 
 ```
@@ -109,6 +149,7 @@ search_engine_sorting/
 │   └── test_algorithms.py   tests for every registered algorithm
 ├── sources/
 │   └── source1.txt ... source5.txt    the five rankings, 10,000 lines each
+├── Dockerfile                         recipe for a container image that runs the program
 ├── Project1.doc, Project1.pdf         the project statement
 └── README.md
 ```
