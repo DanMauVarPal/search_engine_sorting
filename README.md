@@ -140,8 +140,6 @@ Quick sort here is not the textbook in-place version. In-place partitioning swap
 
 Binary insertion sort finds each insert position by binary search, so it needs only Θ(n log n) comparisons, but every insertion still moves the values behind that position. Those moves are made by Python's built-in `list.insert`, which runs in compiled code. That is why, for 10,000 values, it is about as fast as the other two even though its worst case is quadratic.
 
-The docstring at the top of each module explains its method in full.
-
 ## Rules and assumptions
 
 - **Strict inversions.** Equal values never count as an inversion.
