@@ -42,7 +42,7 @@ Two safety checks run along the way, and the program stops with an error if eith
 ## Submission files
 
 - `main.py`, `algorithms/`, and `sources/` are the program and its input data.
-- `output/pdf/Project1_Report.pdf` is the project report.
+- `Report_Project01/CS3364_Project1_Report.docx` is the team report.
 - `tests/` contains the program's correctness checks.
 
 ## How to run
@@ -115,8 +115,8 @@ search_engine_sorting/
 │   └── test_algorithms.py   tests for every registered algorithm
 ├── sources/
 │   └── source1.txt ... source5.txt    the five rankings, 10,000 lines each
-├── Project1_Report.md        editable report text
-├── output/pdf/Project1_Report.pdf    submission report
+├── Report_Project01/
+│   └── CS3364_Project1_Report.docx    team report
 └── README.md
 ```
 
