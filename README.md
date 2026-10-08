@@ -39,6 +39,12 @@ Two safety checks run along the way, and the program stops with an error if eith
 - Python 3.9 or newer
 - No third-party packages
 
+## Submission files
+
+- `main.py`, `algorithms/`, and `sources/` are the program and its input data.
+- `Report_Project01/CS3364_Project1_Report.docx` is the team report.
+- `tests/` contains the program's correctness checks.
+
 ## How to run
 
 From the project folder:
@@ -109,7 +115,8 @@ search_engine_sorting/
 │   └── test_algorithms.py   tests for every registered algorithm
 ├── sources/
 │   └── source1.txt ... source5.txt    the five rankings, 10,000 lines each
-├── Project1.doc, Project1.pdf         the project statement
+├── Report_Project01/
+│   └── CS3364_Project1_Report.docx    team report
 └── README.md
 ```
 
@@ -132,8 +139,6 @@ The function returns a new sorted list and never modifies `items`.
 Quick sort here is not the textbook in-place version. In-place partitioning swaps distant elements, which changes the order of pairs that have not been compared yet, so its swaps cannot be counted as inversions. This version partitions into three new lists (less than, equal to, greater than the pivot) and keeps the original order inside each. The pivot is chosen at random with a fixed seed, so no input ordering is systematically slow and every run is repeatable.
 
 Binary insertion sort finds each insert position by binary search, so it needs only Θ(n log n) comparisons, but every insertion still moves the values behind that position. Those moves are made by Python's built-in `list.insert`, which runs in compiled code. That is why, for 10,000 values, it is about as fast as the other two even though its worst case is quadratic.
-
-The docstring at the top of each module explains its method in full.
 
 ## Rules and assumptions
 
