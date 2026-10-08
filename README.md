@@ -39,6 +39,12 @@ Two safety checks run along the way, and the program stops with an error if eith
 - Python 3.9 or newer
 - No third-party packages
 
+## Submission files
+
+- `main.py`, `algorithms/`, and `sources/` are the program and its input data.
+- `Report_Project01/CS3364_Project1_Report.docx` is the team report.
+- `tests/` contains the program's correctness checks.
+
 ## How to run
 
 From the project folder:
@@ -52,7 +58,7 @@ On systems where Python 3 is installed as `python3`, use `python3 main.py`. The 
 Expected output (the times depend on the machine):
 
 ```
-Merge sort  (0.072 s)
+Merge sort  (0.129 s)
   Rank  Source        Inversions
   1     source1       17,442,716
   2     source5       17,458,031
@@ -61,7 +67,16 @@ Merge sort  (0.072 s)
   5     source4       17,778,159
   Most reliable source: source1
 
-Quick sort  (0.052 s)
+Quick sort  (0.095 s)
+  Rank  Source        Inversions
+  1     source1       17,442,716
+  2     source5       17,458,031
+  3     source3       17,502,205
+  4     source2       17,576,151
+  5     source4       17,778,159
+  Most reliable source: source1
+
+Binary insertion sort  (0.085 s)
   Rank  Source        Inversions
   1     source1       17,442,716
   2     source5       17,458,031
@@ -94,13 +109,14 @@ search_engine_sorting/
 │   ├── __init__.py          marks the folder as a Python package
 │   ├── merge_sort.py        merge sort that counts inversions
 │   ├── quick_sort.py        quick sort that counts inversions
-│   └── custom_sort.py       placeholder for the third algorithm (not implemented yet)
+│   └── custom_sort.py       binary insertion sort that counts inversions (the team's choice)
 ├── tests/
 │   ├── __init__.py          lets "python -m unittest" find the tests
 │   └── test_algorithms.py   tests for every registered algorithm
 ├── sources/
 │   └── source1.txt ... source5.txt    the five rankings, 10,000 lines each
-├── Project1.doc, Project1.pdf         the project statement
+├── Report_Project01/
+│   └── CS3364_Project1_Report.docx    team report
 └── README.md
 ```
 
@@ -118,10 +134,11 @@ The function returns a new sorted list and never modifies `items`.
 | --------------- | -------------------------------- | ---- |
 | `merge_sort.py` | While merging two sorted halves: when an element of the right half is taken first, it forms one inversion with every element still waiting in the left half. | Θ(n log n) in every case |
 | `quick_sort.py` | While partitioning around the pivot: each element forms one inversion with every earlier element already placed in a larger group. | Θ(n log n) expected |
+| `custom_sort.py` | Binary insertion sort, the team's choice. While inserting each value into the list sorted so far: it forms one inversion with every value it is placed in front of. | Θ(n²) worst case |
 
 Quick sort here is not the textbook in-place version. In-place partitioning swaps distant elements, which changes the order of pairs that have not been compared yet, so its swaps cannot be counted as inversions. This version partitions into three new lists (less than, equal to, greater than the pivot) and keeps the original order inside each. The pivot is chosen at random with a fixed seed, so no input ordering is systematically slow and every run is repeatable.
 
-The docstring at the top of each module explains its method in full.
+Binary insertion sort finds each insert position by binary search, so it needs only Θ(n log n) comparisons, but every insertion still moves the values behind that position. Those moves are made by Python's built-in `list.insert`, which runs in compiled code. That is why, for 10,000 values, it is about as fast as the other two even though its worst case is quadratic.
 
 ## Rules and assumptions
 
@@ -133,14 +150,17 @@ The docstring at the top of each module explains its method in full.
 
 ## Adding an algorithm
 
-1. Write `sort_and_count(items)` in a module inside `algorithms/` (for the third algorithm, `custom_sort.py`). It must return `(sorted_items, inversion_count)` and leave `items` unchanged.
-2. In `main.py`, import the module and add one line to the `ALGORITHMS` list:
+1. Write `sort_and_count(items)` in a new module inside `algorithms/`, for example `algorithms/new_sort.py`. It must return `(sorted_items, inversion_count)` and leave `items` unchanged.
+2. In `main.py`, add the module to the import line and add one line to the `ALGORITHMS` list:
 
    ```python
+   from algorithms import custom_sort, merge_sort, new_sort, quick_sort
+
    ALGORITHMS = [
        ("Merge sort", merge_sort.sort_and_count),
        ("Quick sort", quick_sort.sort_and_count),
-       ("Insertion sort", custom_sort.sort_and_count),
+       ("Binary insertion sort", custom_sort.sort_and_count),
+       ("New sort", new_sort.sort_and_count),
    ]
    ```
 
